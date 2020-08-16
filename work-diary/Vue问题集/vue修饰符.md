@@ -1,0 +1,1 @@
+[深入理解vue 修饰符sync【 vue sync修饰符示例】](https://www.jianshu.com/p/6b062af8cf01)

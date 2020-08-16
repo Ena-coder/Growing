@@ -1,0 +1,1 @@
+[在Vue开发中，会遇到html被浏览器解析后，在标签中出现’data-v-xxxxx’](https://www.csdn.net/gather_27/OtTaYgysOTkyLWJsb2cO0O0O.html)
