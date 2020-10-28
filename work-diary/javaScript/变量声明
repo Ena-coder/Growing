@@ -1,0 +1,105 @@
+> 编程就是用合适的数据结构存储数据，用合适的算法管理数据
+
+## 变量提升
+
+----
+
+| 局部无声明，全局找变量                                       | 局部无声明，全局找变量                                       | 变量提升                                                     | let可以防止变量提升                                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011113259494](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011113259494.png) | ![image-20201011113329082](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011113329082.png) | ![image-20201011113441136](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011113441136.png) | ![image-20201011113452601](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011113452601.png) |
+
+------
+
+
+
+## 块作用域
+
+----
+
+### let && var
+
+| 函数自己没有，找全局                                         | 函数自己有，用自己的                                         | 如果不重新声明，改变的还是外部的变量                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011121226466](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121226466.png) | ![image-20201011121255794](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121255794.png) | ![image-20201011121318902](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121318902.png) |
+
+| 块作用域变量污染全局变量                                     | let防止变量污染                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011121814725](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121814725.png) | ![image-20201011121901434](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121901434.png) | ![image-20201011121920066](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011121920066.png) |
+
+
+
+> 多使用有块级作用域这个先进特性的`let`
+
+| var 没有块级作用域                                           | let 有块级作用域                                             |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011150727512](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011150727512.png) | ![image-20201011150742898](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011150742898.png) |
+
+> 有块级作用域的let 和 立即执行函数一样， 有效防止变量污染
+
+| var 没有块级作用域，发生变量污染                             | let 有块级作用域，防止发生变量污染                           | 立即执行函数，防止发生变量污染                               |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011152058472](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011152058472.png) | ![image-20201011152154094](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011152154094.png) | ![image-20201011151724691](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011151724691.png) |
+
+### const
+
+>  原理是不能改变内存地址的引用
+
+| 开辟了新的空间，URL指向新的内存地址                          | 两个URL处于不同的作用域，互不干扰                            | 常量指向一个引用类型，即使改变对象也没有改变CONFIG的指向     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011153819401](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011153819401.png) | ![image-20201011153854565](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011153854565.png) | ![image-20201011154551739](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011154551739.png) |
+
+> const和let一样也有块级作用域
+
+![image-20201011154927221](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011154927221.png)
+
+###  全局对象重复声明
+
+| var会污染window全局对象                                      | let不会污染window全局对象                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011160721989](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011160721989.png) | ![image-20201011160835991](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011160835991.png) |
+
+### Object.freeze
+
+![image-20201011161613400](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011161613400.png)
+
+## null & undefined
+
+----
+
+null：作为引用类型的初始化 ===> let obj = null
+
+undefined：作为基本类型的初始化 ===> let str = undefined
+
+## 严格模式
+
+----
+
+1. 严格模式会作用于当前作用域及其子作用域
+
+   
+
+   | 非严格模式下不报错                                           | 严格模式下报错                                               | 严格模式会作用于当前作用域及其子作用域                       |
+   | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+   | ![image-20201011173722151](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011173722151.png) | ![image-20201011173745952](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011173745952.png) | ![image-20201011174158519](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011174158519.png) |
+
+   
+
+2. 强制声明防止污染全局
+
+| 非严格模式，未声明的全局变量                                 | 严格模式防止污染全局                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20201011172351499](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011172351499.png) | ![image-20201011172416681](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011172416681.png) |
+
+3. 关键词不允许做变量使用
+
+![image-20201011172554857](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011172554857.png)
+
+4. 解构差别
+
+   | 非严格模式可以不使用声明指令                                 | 严格模式必须使用声明指令                                     |
+   | ------------------------------------------------------------ | ------------------------------------------------------------ |
+   | ![image-20201011172945657](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011172945657.png) | ![image-20201011173157511](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20201011173157511.png) |
+
+   
+
+   
