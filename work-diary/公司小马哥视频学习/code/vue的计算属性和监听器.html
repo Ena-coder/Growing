@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  ul{
+    list-style: none;
+  }
+</style>
+<body>
+  <div id="app">
+    <input type="text" v-model="msg">
+    <button @click = "userList[0].name = 'rose'">{{userList[0].name}}</button>
+    <br>
+    <audio :src="setChangeSongSrc" autoplay controls></audio>
+    <ul>
+      <li v-for="(item, index) in musicList" @click="setChangeSongSrc = index">
+        <h2>{{index}} - 歌名：{{item.name}}</h2>
+      </li>
+    </ul>
+  </div>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      data:{
+        msg:'',
+        userList:[
+          {name:'lily', age:18}
+        ],
+        musicList:[
+          {name:'彩券', songSrc:'http://music.163.com/song/media/outer/url?id=1486513704.mp3'},
+          {name:'天外来物', songSrc:'http://music.163.com/song/media/outer/url?id=1463165983.mp3'},
+          {name:'我好像在哪见过你', songSrc:'http://music.163.com/song/media/outer/url?id=417859631.mp3'}
+        ],
+        currentIndex: 0
+      },
+      watch:{
+        'msg': function(newV, oldV){
+          console.log(newV, oldV);
+        },
+        'userList': {
+          deep: true, //改变指向的内存地址
+          handler: function(newV, oldV){
+            console.log(newV[0].name);
+          },
+        }
+      },
+      computed:{
+        setChangeSongSrc:{
+          set: function(val){
+            this.currentIndex = val
+          },
+          get: function(){
+            return this.musicList[this.currentIndex].songSrc
+          }
+        }
+        // changeSongSrc(){
+        //   return this.musicList[this.currentIndex].songSrc
+        // },
+      }
+    })
+  </script>
+</body>
+</html>

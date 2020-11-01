@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01-vue的组件通信</title>
+</head>
+<style>
+  .default {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  .success {
+    color: #fff;
+    background-color: #67c23a;
+    border-color: #67c23a;
+  }
+</style>
+<body>
+  <div id="app"></div>
+
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <script>
+    Vue.filter('priceFormat', function(val, unit){
+      return unit + val.toFixed(3)
+    })
+    Vue.component('ButtonCpn',{
+      template: `
+        <button class="default" :class="type">
+          <slot name="title">按钮组件</slot>
+        </button>`,
+      props: {
+        type: {
+          type:String,
+          default:''
+        }
+      }
+    })
+    Vue.component('ChildCpn',{
+      template: `
+        <div>
+          <h2>我是子组件</h2>
+          <input v-model="msg" @input="valueChange(msg)"></input>
+          <ButtonCpn :type="'success'">通过按钮</ButtonCpn>
+          <h3>{{chilePrice | priceFormat('$')}}</h3>
+        </div>`,
+      props:{
+        msg: {
+          type: String,
+          default:'父传子的默认信息'
+        }
+      },
+      data(){
+        return {
+          chilePrice: 100.1018,
+        }
+      },
+      methods:{
+        valueChange(val){
+          //响应事件名 传值
+          this.$emit('childHandler',val)
+        }
+      }
+    })
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '我是父组件传给子组件的msg',
+        price: 20.84787,
+      },
+      template: `
+        <div>
+          <h1>我是父组件</h1>
+          <ButtonCpn>
+            <span slot="title">默认按钮</span>
+          </ButtonCpn>
+          <hr>
+          <ChildCpn :msg="msg" @childHandler="childHandler"></ChildCpn>
+          <hr>
+          <h3>{{price | priceFormat}}</h3>
+          
+        </div>
+      `,
+      methods:{
+        childHandler(val){
+          console.log(val);
+          
+        }
+      },
+      filters:{
+        priceFormat(val){
+          return "￥" + val.toFixed(2)
+        }
+      }
+    })
+  </script>
+</body>
+</html>
