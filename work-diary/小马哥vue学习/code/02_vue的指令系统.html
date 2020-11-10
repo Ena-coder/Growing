@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02_vue的指令系统</title>
+</head>
+<body>
+  <div id="app">
+    <h1 v-text='msg' :aaa = "'haha'"></h1>
+    <div v-html='msg2'></div>
+  </div>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data(){
+        return{
+          msg:'我是信息',
+          msg2:`<span>我是信息</span>`
+        }
+      },
+      template:``,
+    })
+  </script>
+</body>
+</html>
