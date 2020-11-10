@@ -12,6 +12,8 @@
 </style>
 <body>
   <div id="app">
+    <h2>{{now()}}</h2>
+    <h2>{{fullName}}</h2>
     <input type="text" v-model="msg">
     <button @click = "userList[0].name = 'rose'">{{userList[0].name}}</button>
     <br>
@@ -24,7 +26,7 @@
   </div>
   <script src="./node_modules/vue/dist/vue.min.js"></script>
   <script>
-    new Vue({
+    var vm = new Vue({
       el: "#app",
       data:{
         msg:'',
@@ -36,12 +38,15 @@
           {name:'天外来物', songSrc:'http://music.163.com/song/media/outer/url?id=1463165983.mp3'},
           {name:'我好像在哪见过你', songSrc:'http://music.163.com/song/media/outer/url?id=417859631.mp3'}
         ],
-        currentIndex: 0
+        currentIndex: 0,
+        firstName:'Liu',
+        lastName:'Jing',
       },
       watch:{
-        'msg': function(newV, oldV){
-          console.log(newV, oldV);
-        },
+        // 'msg': function(newV, oldV){
+        //   console.log(newV, oldV);
+        // },
+        msg:'changeMsg',
         'userList': {
           deep: true, //改变指向的内存地址
           handler: function(newV, oldV){
@@ -50,6 +55,9 @@
         }
       },
       computed:{
+        now: function(){
+          return 'Date.now()'
+        },
         setChangeSongSrc:{
           set: function(val){
             this.currentIndex = val
@@ -57,10 +65,31 @@
           get: function(){
             return this.musicList[this.currentIndex].songSrc
           }
+        },
+        fullName: {
+          get: function(){
+            return this.firstName + ' ' + this.lastName
+          },
+          set: function(val){
+            let names = val.split(' ')
+            this.firstName =  names[0]
+            this.lastName = names[names.length - 1]
+          }
         }
+          
         // changeSongSrc(){
         //   return this.musicList[this.currentIndex].songSrc
         // },
+      },
+      methods:{
+        // changeMsg(val){
+        //   console.log(val);
+          
+        // }
+        now(){
+          return 'Date.now()'
+        }
+        
       }
     })
   </script>
