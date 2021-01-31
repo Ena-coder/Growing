@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./hd.js"></script>
+</head>
+<body>
+  <script>
+    // 问题：HD中的操作先执行，同步操作后执行
+    // 预期：同步操作先执行，promise是异步操作后执行
+    // 解决：使用setTimeout将HD放到任务队列中，等到下次轮巡队列的时候异步执行
+    let p = new HD((resolve, reject) => {
+      // resolve('解决')
+      reject('拒绝')
+    }).then(
+      value => {
+        // console.log(a)  //没有捕抓异常就抛出错误 a is not defined
+        console.log(value)  //a is not defined
+      },
+      reason => {
+        console.log(reason);
+      }
+    )
+    // new Promise((resolve, reject) => {
+    //   resolve('解决')
+    //   reject('拒绝')
+    // }).then(
+    //   val => {
+    //     console.log(val);
+    //   },
+    //   res => {
+    //     console.log(res);
+    //   }
+    // )
+    console.log('同步操作先执行，promise是异步操作后执行');
+  </script>
+</body>
+</html>

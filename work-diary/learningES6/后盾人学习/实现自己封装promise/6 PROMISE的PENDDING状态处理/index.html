@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./hd.js"></script>
+</head>
+<body>
+  <script>
+    // 问题：当给HD的resolve解决设置了延迟1秒执行,发现状态一直处于pending不改变
+    // 预期：同步操作先执行，promise是异步操作后执行,setTimeout设置1秒后输出'解决'
+    // 解决：then中获取当前状态是pending,则讲当前当前onFulfilled和onRejected压入callbacks数组，等1秒钟后执行resolve或者reject时再根据当前pengding状态和callbacks执行对应的onFulfilled或onRejected
+    let p = new HD((resolve, reject) => {
+      setTimeout(() => { //给HD的resolve解决设置了延迟1秒执行
+      //   resolve('解决')
+      reject('拒绝')
+      },1000)
+    }).then(
+      value => {
+        console.log(value)
+      },
+      reason => {
+        console.log(reason);
+      }
+    )
+    // new Promise((resolve, reject) => {
+    //   resolve('解决')
+    //   reject('拒绝')
+    // }).then(
+    //   val => {
+    //     setTimeout(() => {
+    //       console.log(val);
+    //     }, 1000)
+    //   },
+    //   res => {
+    //     console.log(res);
+    //   }
+    // )
+    console.log('同步操作先执行，promise是异步操作后执行,1秒后输出解决');
+  </script>
+</body>
+</html>
