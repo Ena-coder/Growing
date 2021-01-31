@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>封装一个promise</title>
+  <script src="./HD.js"></script>
+</head>
+<body>
+  <script>
+    let p = new HD((resolve, reject) => {
+      resolve('解决')
+      reject('拒绝')
+    })
+    console.log(p);
+  </script>
+</body>
+</html>
